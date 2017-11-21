@@ -1,20 +1,41 @@
 <template>
   <div id="app">
-    <message>
-      <h2>What are you doing today?</h2>
-    </message>
-    <message>
-      <h2>Learning about Slots in Vue.</h2>
+
+    <input type="text" v-model="message">
+    <button @click="sendMessage()">+</button>
+
+    <message v-for="message in messageList" :message-text="message.text">
+      <h2 slot="date">{{ message.date | date }}</h2>
     </message>
   </div>
 </template>
 
 <script>
+import moment from 'moment';
 import Message from './components/Message';
 
+const convertDateToString = value => moment(String(value)).format('MM/DD/YYYY');
+
 export default {
+  data() {
+    return {
+      message: '',
+      messageList: []
+    }
+  },
+  methods: {
+    sendMessage() {
+      if ( this.message.length > 0 ) {
+        this.messageList.push({ date: new Date(), text: this.message });
+        this.message = ""
+      }
+    }
+  },
   components: {
     Message
+  },
+  filters: {
+    date: convertDateToString
   }
 }
 </script>

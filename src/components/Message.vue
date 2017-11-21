@@ -1,16 +1,13 @@
 <template>
   <div>
-    <h1>I'm part of the Message component!</h1>
+    <slot name="date"></slot>
     <slot></slot>
+    <h1>{{messageText}}</h1>
   </div>
 </template>
 
 <script>
 export default {
-
+  props: ['messageText']
 }
 </script>
-
-<style>
-
-</style>
